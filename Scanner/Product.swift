@@ -12,19 +12,20 @@ class Product{
     //Mark: Properties
     var name: String
     var photo: UIImage?
-    var id: Int
+    var id: String
     var upc: String?
+    var exp: Date?
+    
     //Mark: Initializations
-    init?(name: String, photo: UIImage?, id: Int, upc: String?) {
+    init?(name: String, photo: UIImage?, id: String, upc: String?, exp: Date?) {
         // Initialization should fail if there is no name or if the rating is negative.
-        if name.isEmpty || id < 0  {
+        guard !name.isEmpty else{
             return nil
         }
-
         self.name = name
         self.photo = photo
         self.id = id
         self.upc = upc
-        
+        self.exp = exp
     }
 }

@@ -12,6 +12,11 @@
 		38CBBA4920ACB4F0007561B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4720ACB4F0007561B7 /* Main.storyboard */; };
 		38CBBA4B20ACB4F0007561B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */; };
 		38CBBA4E20ACB4F0007561B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */; };
+		38CBBA5620ACBAD8007561B7 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA5520ACBAD8007561B7 /* Product.swift */; };
+		38CBBA5820ACBF1C007561B7 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */; };
+		38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA5920ACC438007561B7 /* ProductTableViewController.swift */; };
+		38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA6120ADE178007561B7 /* ProductViewController.swift */; };
+		38CFE03C20B143D3003DEB9A /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFE03B20B143D3003DEB9A /* QRScannerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38CBBA4D20ACB4F0007561B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		38CBBA4F20ACB4F0007561B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38CBBA5520ACBAD8007561B7 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		38CBBA5920ACC438007561B7 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
+		38CBBA6120ADE178007561B7 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		38CFE03B20B143D3003DEB9A /* QRScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +70,11 @@
 				38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */,
 				38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */,
 				38CBBA4F20ACB4F0007561B7 /* Info.plist */,
+				38CBBA5520ACBAD8007561B7 /* Product.swift */,
+				38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */,
+				38CBBA5920ACC438007561B7 /* ProductTableViewController.swift */,
+				38CBBA6120ADE178007561B7 /* ProductViewController.swift */,
+				38CFE03B20B143D3003DEB9A /* QRScannerController.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -136,7 +151,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				38CBBA4620ACB4F0007561B7 /* ViewController.swift in Sources */,
+				38CBBA5820ACBF1C007561B7 /* ProductTableViewCell.swift in Sources */,
 				38CBBA4420ACB4F0007561B7 /* AppDelegate.swift in Sources */,
+				38CFE03C20B143D3003DEB9A /* QRScannerController.swift in Sources */,
+				38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */,
+				38CBBA5620ACBAD8007561B7 /* Product.swift in Sources */,
+				38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
