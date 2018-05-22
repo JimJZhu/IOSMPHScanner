@@ -8,18 +8,24 @@
 
 import UIKit
 import os.log
+import Firebase
+import FirebaseDatabase
 
 class ProductTableViewController: UITableViewController {
     
     //MARK: Properties
-    var products = [Product]()
-    var filteredProducts = [Product]()
-    let searchController = UISearchController(searchResultsController: nil)
-    
+    private var products = [Product]()
+    private var filteredProducts = [Product]()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var ref: DatabaseReference!
+
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        
+        // Gets Database reference
+        ref = Database.database().reference().child("products")
         // Loads sample products
-        loadSampleProducts()
+        loadProducts(from: ref)
         
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
@@ -118,19 +124,18 @@ class ProductTableViewController: UITableViewController {
     }
     
     //MARK: Private Methods
-    private func loadSampleProducts(){
-        let photo = UIImage(named: "defaultPhoto")
-        guard let product1 = Product(name: "First Product", photo: photo, id: "1", upc: "123456789", exp: Date()) else{
-            fatalError("Unable to instantiate product")
-        }
-        guard let product2 = Product(name: "Second Product", photo: photo, id: "2", upc: "12348912", exp: Date()) else{
-            fatalError("Unable to instantiate product")
-        }
-        guard let product3 = Product(name: "Third Product", photo: photo, id: "3", upc: "459234522", exp: Date()) else{
-            fatalError("Unable to instantiate product")
-        }
-        products += [product1, product2, product3]
-        
+    private func loadProducts(from ref: DatabaseReference){
+        ref.observe(.value, with: {(snapshot) in
+            for child in snapshot.children{
+                guard let productSnapshot = child as? DataSnapshot else{
+                    fatalError("Unable to cast as DataSnapshot")
+                }
+                guard let product = Product(snapshot: productSnapshot) else{
+                    fatalError("Unable to instantiate product")
+                }
+                self.products += [product]
+            }
+        })
     }
     private func configureCell(cell: ProductTableViewCell, forRowAtIndexPath: IndexPath){
         let product = isFiltering() ? filteredProducts[forRowAtIndexPath.row]: products[forRowAtIndexPath.row]
@@ -153,7 +158,7 @@ class ProductTableViewController: UITableViewController {
             cell.expiryDateLabel.text = "-"
         }
         cell.productImageView.image = product.photo
-        cell.upcCodeLabel.text = product.upc ?? "-"
+        cell.upcCodeLabel.text = product.upcEAN ?? "-"
     }
     
     func searchBarIsEmpty() -> Bool {

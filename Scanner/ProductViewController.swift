@@ -91,12 +91,13 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             os_log("The cancel button was pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        let name = productNameTextField.text ?? ""
-        let photo = productImageView.image
-        let upc = productUPCTextField.text ?? ""
-        let exp = expiryDateSwitch.isOn ? productExpiryDatePicker.date : nil
-        let id = UUID().uuidString
-        product = Product(name: name, photo: photo, id: id, upc: upc, exp: exp)
+//        let name = productNameTextField.text ?? ""
+//        let photo = productImageView.image
+//        let upc = productUPCTextField.text ?? ""
+//        let exp = expiryDateSwitch.isOn ? productExpiryDatePicker.date : nil
+//        let id = UUID().uuidString
+        // TODO: Fix the addition
+//        product = Product(name: name, photo: photo, id: id, upc: upc, exp: exp)
     }
     //MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -177,7 +178,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         navigationItem.title = product.name
         productNameTextField.text = product.name
         productImageView.image = product.photo
-        productUPCTextField.text = product.upc ?? "-"
+        productUPCTextField.text = product.upcEAN ?? "-"
         // Turns off picker if no date is given
         if let exp = product.exp {
             productExpiryDatePicker.date = exp
