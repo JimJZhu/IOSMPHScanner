@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import FirebaseAuth
 
 class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -232,7 +233,8 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     //MARK: Private Methods
     private func updateSaveButtonState(){
         let text = productNameTextField.text ?? ""
-        saveButton.isEnabled = !text.isEmpty
+        saveButton.isEnabled = !text.isEmpty && AuthHelper.isAdmin(user: Auth.auth().currentUser)
+        
     }
     private func updateDatePickerState(){
         // Turns off and hides date picker if switch is off
@@ -287,7 +289,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         // Set field values only if in see detail mode
         navigationItem.title = product.name
         productNameTextField.text = product.name
-        productImageView.image = product.photo
+        productImageView.image = product.photo ?? #imageLiteral(resourceName: "defaultPhoto")
         productUPCTextField.text = product.upcEAN ?? "-"
         productASINTextField.text = product.asin ?? "-"
         productCOMSKUTextField.text = product.comSKU ?? "-"
