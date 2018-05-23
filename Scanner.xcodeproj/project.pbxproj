@@ -52,6 +52,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3866113E20B4A9AC00D55A25 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				38CBBA5520ACBAD8007561B7 /* Product.swift */,
+				38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3866113F20B4A9C400D55A25 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				38CBBA4520ACB4F0007561B7 /* ViewController.swift */,
+				38CBBA5920ACC438007561B7 /* ProductTableViewController.swift */,
+				38CBBA6120ADE178007561B7 /* ProductViewController.swift */,
+				38CFE03B20B143D3003DEB9A /* QRScannerController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3866114020B4A9DF00D55A25 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */,
+				38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */,
+				38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		38CBBA3720ACB4EF007561B7 = {
 			isa = PBXGroup;
 			children = (
@@ -73,17 +103,11 @@
 		38CBBA4220ACB4EF007561B7 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */,
-				38CBBA4520ACB4F0007561B7 /* ViewController.swift */,
+				3866114020B4A9DF00D55A25 /* Supporting Files */,
+				3866113F20B4A9C400D55A25 /* Controllers */,
+				3866113E20B4A9AC00D55A25 /* Models */,
 				38CBBA4720ACB4F0007561B7 /* Main.storyboard */,
-				38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */,
-				38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */,
 				38CBBA4F20ACB4F0007561B7 /* Info.plist */,
-				38CBBA5520ACBAD8007561B7 /* Product.swift */,
-				38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */,
-				38CBBA5920ACC438007561B7 /* ProductTableViewController.swift */,
-				38CBBA6120ADE178007561B7 /* ProductViewController.swift */,
-				38CFE03B20B143D3003DEB9A /* QRScannerController.swift */,
 				38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */,
 			);
 			path = Scanner;
