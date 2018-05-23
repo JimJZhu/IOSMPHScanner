@@ -15,6 +15,17 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameTextField: UITextField!
     @IBOutlet weak var productUPCTextField: UITextField!
+    @IBOutlet weak var productCASKUTextField: UITextField!
+    @IBOutlet weak var productCOMSKUTextField: UITextField!
+    @IBOutlet weak var productASINTextField: UITextField!
+    @IBOutlet weak var amazonCAPriceTextField: UITextField!
+    @IBOutlet weak var amazonCOMPriceTextField: UITextField!
+    @IBOutlet weak var ebayPriceTextField: UITextField!
+    @IBOutlet weak var fbaCAPriceTextField: UITextField!
+    @IBOutlet weak var fbaCOMPriceTextField: UITextField!
+    @IBOutlet weak var fifibabyPriceTextField: UITextField!
+    @IBOutlet weak var imaplehousePriceTextField: UITextField!
+    @IBOutlet weak var maplepetsPriceTextField: UITextField!
     @IBOutlet weak var productExpiryDatePicker: UIDatePicker!
     @IBOutlet weak var expiryDateSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -91,13 +102,57 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             os_log("The cancel button was pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-//        let name = productNameTextField.text ?? ""
-//        let photo = productImageView.image
-//        let upc = productUPCTextField.text ?? ""
-//        let exp = expiryDateSwitch.isOn ? productExpiryDatePicker.date : nil
-//        let id = UUID().uuidString
-        // TODO: Fix the addition
-//        product = Product(name: name, photo: photo, id: id, upc: upc, exp: exp)
+        let noPriceGiven = "0.00000"
+        let name = productNameTextField.text ?? "Unnamed"
+        let photo = productImageView.image
+        let upc = productUPCTextField.text
+        let exp = expiryDateSwitch.isOn ? productExpiryDatePicker.date : nil
+        let id = product?.id ?? UUID().uuidString
+        let caSKU = productCASKUTextField.text
+        let comSKU = productCOMSKUTextField.text
+        let asin = productASINTextField.text
+        var amazonCAPrice: Double? = nil
+        if let amazonCAPriceText = amazonCAPriceTextField.text,
+            amazonCAPriceText != noPriceGiven {
+            amazonCAPrice = Double(amazonCAPriceText)
+        }
+        var amazonCOMPrice: Double? = nil
+        if let amazonCOMPriceText = amazonCOMPriceTextField.text,
+            amazonCOMPriceText != noPriceGiven {
+            amazonCOMPrice = Double(amazonCOMPriceText)
+        }
+        var ebayPrice: Double? = nil
+        if let ebayPriceText = ebayPriceTextField.text,
+            ebayPriceText != noPriceGiven {
+            ebayPrice = Double(ebayPriceText)
+        }
+        var fbaCAPrice: Double? = nil
+        if let fbaCAPriceText = fbaCAPriceTextField.text,
+            fbaCAPriceText != noPriceGiven {
+            fbaCAPrice = Double(fbaCAPriceText)
+        }
+        var fbaCOMPrice: Double? = nil
+        if let fbaCOMPriceText = fbaCOMPriceTextField.text,
+            fbaCOMPriceText != noPriceGiven {
+            fbaCOMPrice = Double(fbaCOMPriceText)
+        }
+        var imaplehousePrice: Double? = nil
+        if let imaplehousePriceText = imaplehousePriceTextField.text,
+            imaplehousePriceText != noPriceGiven {
+            imaplehousePrice = Double(imaplehousePriceText)
+        }
+        var fifibabyPrice: Double? = nil
+        if let fifibabyPriceText = fifibabyPriceTextField.text,
+            fifibabyPriceText != noPriceGiven {
+            fifibabyPrice = Double(fifibabyPriceText)
+        }
+        var maplepetPrice: Double? = nil
+        if let maplepetPriceText = maplepetsPriceTextField.text,
+            maplepetPriceText != noPriceGiven {
+            maplepetPrice = Double(maplepetPriceText)
+        }
+        
+        product = Product(name: name, photo: photo, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, ref: nil)
     }
     //MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -151,6 +206,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     }
     private func updateDatePickerState(){
         productExpiryDatePicker.isEnabled = expiryDateSwitch.isOn
+        productExpiryDatePicker.isHidden = !expiryDateSwitch.isOn
     }
     private func toggleEditMode(to toggleOn: Bool){
         if toggleOn {
@@ -158,8 +214,19 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             productNameTextField.isEnabled = true
             productImageView.isUserInteractionEnabled = true
             productUPCTextField.isEnabled = true
-            productExpiryDatePicker.isEnabled = true
+            productASINTextField.isEnabled = true
+            productCOMSKUTextField.isEnabled = true
+            productCASKUTextField.isEnabled = true
+            amazonCOMPriceTextField.isEnabled = true
+            amazonCAPriceTextField.isEnabled = true
+            ebayPriceTextField.isEnabled = true
+            fbaCOMPriceTextField.isEnabled = true
+            fbaCAPriceTextField.isEnabled = true
+            imaplehousePriceTextField.isEnabled = true
+            fifibabyPriceTextField.isEnabled = true
+            maplepetsPriceTextField.isEnabled = true
             expiryDateSwitch.isEnabled = true
+            productExpiryDatePicker.isEnabled = expiryDateSwitch.isOn
             saveButton.title = "Save"
             cancelButton.title = "Cancel"
         } else {
@@ -167,6 +234,17 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             productNameTextField.isEnabled = false
             productImageView.isUserInteractionEnabled = false
             productUPCTextField.isEnabled = false
+            productASINTextField.isEnabled = false
+            productCOMSKUTextField.isEnabled = false
+            productCASKUTextField.isEnabled = false
+            amazonCOMPriceTextField.isEnabled = false
+            amazonCAPriceTextField.isEnabled = false
+            ebayPriceTextField.isEnabled = false
+            fbaCOMPriceTextField.isEnabled = false
+            fbaCAPriceTextField.isEnabled = false
+            imaplehousePriceTextField.isEnabled = false
+            fifibabyPriceTextField.isEnabled = false
+            maplepetsPriceTextField.isEnabled = false
             productExpiryDatePicker.isEnabled = false
             expiryDateSwitch.isEnabled = false
             saveButton.title = "Edit"
@@ -174,17 +252,31 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         }
     }
     private func setProductFields(to product: Product){
+        print(product)
         // Set field values if in see detail mode
         navigationItem.title = product.name
         productNameTextField.text = product.name
         productImageView.image = product.photo
         productUPCTextField.text = product.upcEAN ?? "-"
+        productASINTextField.text = product.asin ?? "-"
+        productCOMSKUTextField.text = product.comSKU ?? "-"
+        productCASKUTextField.text = product.caSKU ?? "-"
+        amazonCOMPriceTextField.text = String(format:"%.5f", product.amazonCOMPrice ?? "0")
+        amazonCAPriceTextField.text = String(format:"%.5f", product.amazonCAPrice ?? "0")
+        ebayPriceTextField.text = String(format:"%.5f", product.ebayPrice ?? "0")
+        fbaCOMPriceTextField.text = String(format:"%.5f", product.fbaCOMPrice ?? "0")
+        fbaCAPriceTextField.text = String(format:"%.5f", product.fbaCAPrice ?? "0")
+        imaplehousePriceTextField.text = String(format:"%.5f", product.imaplehousePrice ?? "0")
+        fifibabyPriceTextField.text = String(format:"%.5f", product.fifibabyPrice ?? "0")
+        maplepetsPriceTextField.text = String(format:"%.5f", product.maplepetPrice ?? "0")
         // Turns off picker if no date is given
         if let exp = product.exp {
             productExpiryDatePicker.date = exp
+            productExpiryDatePicker.isHidden = false
             expiryDateSwitch.setOn(true, animated: true)
         }else{
             productExpiryDatePicker.isEnabled = false
+            productExpiryDatePicker.isHidden = true
             expiryDateSwitch.setOn(false, animated: true)
         }
     }

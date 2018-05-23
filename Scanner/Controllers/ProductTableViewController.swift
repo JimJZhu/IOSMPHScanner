@@ -83,7 +83,7 @@ class ProductTableViewController: UITableViewController {
         super.prepare(for: segue, sender: sender)
         switch (segue.identifier ?? "") {
         case "AddItem":
-            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            os_log("Adding a new product.", log: OSLog.default, type: .debug)
         case "ShowDetail":
             guard let productDetailViewController = segue.destination as? ProductViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
@@ -100,7 +100,7 @@ class ProductTableViewController: UITableViewController {
             let selectedProduct = products[indexPath.row]
             productDetailViewController.product = selectedProduct
         case "ScanItem":
-            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+            os_log("Scanning a new Item.", log: OSLog.default, type: .debug)
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "?")")
         }
@@ -109,14 +109,18 @@ class ProductTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func unwindToProductList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ProductViewController, let product = sourceViewController.product {
+//            let productRef = self.ref.child(product.id)
+            print(product.toAnyObject())
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing meal.
+                // Update an existing product.
                 products[selectedIndexPath.row] = product
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             }else{
-                // Add a new meal.
+                // Add to firebase
+                print(product.toAnyObject())
+//                productRef.setValue(product.toAnyObject())
+                // Add a new product.
                 let newIndexPath = IndexPath(row: products.count, section: 0)
-                
                 products.append(product)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
@@ -135,6 +139,7 @@ class ProductTableViewController: UITableViewController {
                 }
                 self.products += [product]
             }
+            self.tableView.reloadData()
         })
     }
     private func configureCell(cell: ProductTableViewCell, forRowAtIndexPath: IndexPath){
