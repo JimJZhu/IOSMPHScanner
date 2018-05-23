@@ -102,6 +102,8 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             os_log("The cancel button was pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
+        
+        // Processing field text
         let noPriceGiven = "0.00000"
         let name = productNameTextField.text ?? "Unnamed"
         let photo = productImageView.image
@@ -151,24 +153,42 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             maplepetPriceText != noPriceGiven {
             maplepetPrice = Double(maplepetPriceText)
         }
-        
+        // New product based on fields
         product = Product(name: name, photo: photo, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, ref: nil)
     }
     //MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         let isPresentingInAddProductMode = presentingViewController is UITabBarController
         if isPresentingInAddProductMode {
-            dismiss(animated: true, completion: nil)
+            // Present alert for confirmiation before exiting
+            let alert = UIAlertController(title: "Add Item", message: "Are you sure you want to exit Add Item? Changes will not be saved.", preferredStyle: .alert)
+            let exitAction = UIAlertAction(title: "Exit", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                self.dismiss(animated: true, completion: nil)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) -> Void in
+            }
+            alert.addAction(exitAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion:nil)
         } else if let owningNavigationController = navigationController {
             // Switch to view mode if it toggle mode, otherwise navigate back
             if let title = sender.title, title == "Back" {
                 owningNavigationController.popViewController(animated: true)
             } else {
-                guard let uneditedProduct = product else{
-                    fatalError("Selected product does not exist!")
+                // Present alert for confirmiation before exiting
+                let alert = UIAlertController(title: "Edit Item", message: "Are you sure you want to exit Edit Item? Changes will not be saved.", preferredStyle: .alert)
+                let exitAction = UIAlertAction(title: "Exit", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                    guard let uneditedProduct = self.product else{
+                        fatalError("Selected product does not exist!")
+                    }
+                    self.setProductFields(to: uneditedProduct)
+                    self.toggleEditMode(to: false)
                 }
-                setProductFields(to: uneditedProduct)
-                toggleEditMode(to: false)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) -> Void in
+                }
+                alert.addAction(exitAction)
+                alert.addAction(cancelAction)
+                present(alert, animated: true, completion:nil)
             }
         } else {
             fatalError("The ProductViewController is not inside a navigation controller.")
@@ -193,10 +213,20 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         updateDatePickerState()
     }
     @IBAction func editOrSave(_ sender: UIBarButtonItem) {
+        // Switch between edit mode and save mode
         if let title = sender.title, title == "Edit"{
             toggleEditMode(to: true)
         }else{
-            performSegue(withIdentifier:"saveProduct", sender: saveButton)
+            // Present alert for confirmiation before exiting
+            let alert = UIAlertController(title: "Save", message: "Are you sure you want to save this item?", preferredStyle: .alert)
+            let exitAction = UIAlertAction(title: "Save", style: .destructive) { (alert: UIAlertAction!) -> Void in
+                self.performSegue(withIdentifier:"saveProduct", sender: self.saveButton)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) -> Void in
+            }
+            alert.addAction(exitAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion:nil)
         }
     }
     //MARK: Private Methods
@@ -205,6 +235,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         saveButton.isEnabled = !text.isEmpty
     }
     private func updateDatePickerState(){
+        // Turns off and hides date picker if switch is off
         productExpiryDatePicker.isEnabled = expiryDateSwitch.isOn
         productExpiryDatePicker.isHidden = !expiryDateSwitch.isOn
     }
@@ -253,7 +284,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     }
     private func setProductFields(to product: Product){
         print(product)
-        // Set field values if in see detail mode
+        // Set field values only if in see detail mode
         navigationItem.title = product.name
         productNameTextField.text = product.name
         productImageView.image = product.photo
