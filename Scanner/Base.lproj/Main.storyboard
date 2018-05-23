@@ -190,7 +190,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="EYh-kv-zyh"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Scanner" id="RmT-TO-BOu"/>
+                    <navigationItem key="navigationItem" title="Scanner" id="RmT-TO-BOu">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="ftL-1j-yAo">
+                            <connections>
+                                <action selector="cancel:" destination="T51-sL-xoh" id="16f-cX-kEX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lve-4a-iLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
