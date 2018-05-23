@@ -10,8 +10,12 @@ import UIKit
 import os.log
 import Firebase
 import FirebaseDatabase
+import FirebaseAuth
 
 class ProductTableViewController: UITableViewController {
+    
+    //MARK: Outlets
+    @IBOutlet weak var newItemButton: UIBarButtonItem!
     
     //MARK: Properties
     private var products = [Product]()
@@ -34,6 +38,8 @@ class ProductTableViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
+        // Turns off admin features
+        newItemButton.isEnabled = AuthHelper.isAdmin(user: Auth.auth().currentUser)
     }
 
     override func didReceiveMemoryWarning() {
