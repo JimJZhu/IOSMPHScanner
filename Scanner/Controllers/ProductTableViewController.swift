@@ -24,7 +24,7 @@ class ProductTableViewController: UITableViewController {
         
         // Gets Database reference
         ref = Database.database().reference().child("products")
-        // Loads sample products
+        // Loads products
         loadProducts(from: ref)
         
         // Setup the Search Controller
@@ -47,7 +47,6 @@ class ProductTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if isFiltering() {
             return filteredProducts.count
         }
@@ -72,8 +71,28 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            products.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            print(products.count)
+            if isFiltering(){
+                let toBeDeleted = filteredProducts[indexPath.row]
+                var count = 0
+                for product in products{
+                    if product.id == toBeDeleted.id{
+                        products.remove(at: count)
+                    }
+                    count += 1
+                }
+                filteredProducts.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }else{
+                products.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            print(products.count)
+            let alert = UIAlertController(title: "Deleting Disabled", message: "Deleting from database is disabled. The deleted item will return after refreshing.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -97,7 +116,7 @@ class ProductTableViewController: UITableViewController {
                 fatalError("The selected cell is not being displayed by the table")
             }
             
-            let selectedProduct = products[indexPath.row]
+            let selectedProduct = isFiltering() ? filteredProducts[indexPath.row] : products[indexPath.row]
             productDetailViewController.product = selectedProduct
         case "ScanItem":
             os_log("Scanning a new Item.", log: OSLog.default, type: .debug)
@@ -109,27 +128,14 @@ class ProductTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func unwindToProductList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ProductViewController, let product = sourceViewController.product {
-//            let productRef = self.ref.child(product.id)
-            print(product.toAnyObject())
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing product.
-                products[selectedIndexPath.row] = product
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            }else{
-                // Add to firebase
-                print(product.toAnyObject())
-//                productRef.setValue(product.toAnyObject())
-                // Add a new product.
-                let newIndexPath = IndexPath(row: products.count, section: 0)
-                products.append(product)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+            let productRef = self.ref.child(product.id)
+            productRef.setValue(product.toAnyObject())
         }
     }
-    
     //MARK: Private Methods
     private func loadProducts(from ref: DatabaseReference){
         ref.observe(.value, with: {(snapshot) in
+            self.products.removeAll()
             for child in snapshot.children{
                 guard let productSnapshot = child as? DataSnapshot else{
                     fatalError("Unable to cast as DataSnapshot")
