@@ -84,6 +84,7 @@
 		3866114020B4A9DF00D55A25 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */,
 				38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */,
 				38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */,
 				38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */,
@@ -119,7 +120,6 @@
 				38CBBA4720ACB4F0007561B7 /* Main.storyboard */,
 				38CBBA4F20ACB4F0007561B7 /* Info.plist */,
 				38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */,
-				380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -243,6 +243,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Scanner/Pods-Scanner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -250,6 +251,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);

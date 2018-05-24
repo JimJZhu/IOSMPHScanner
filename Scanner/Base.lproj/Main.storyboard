@@ -528,6 +528,10 @@
                                             <constraint firstAttribute="height" constant="936" id="BVo-YF-s5y"/>
                                         </constraints>
                                     </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ih2-wU-1OR">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -580,6 +584,7 @@
                         <outlet property="productNameTextField" destination="oR2-fg-GIF" id="pbL-d6-AKJ"/>
                         <outlet property="productUPCTextField" destination="fJ7-gl-g7z" id="Lhg-Iu-1JL"/>
                         <outlet property="saveButton" destination="Z7J-2H-Wh0" id="Pn0-eL-mxn"/>
+                        <outlet property="uploadProgressBar" destination="Ih2-wU-1OR" id="ESn-AI-zb2"/>
                         <segue destination="A6F-u0-VJ1" kind="unwind" identifier="saveProduct" unwindAction="unwindToProductListWithSender:" id="Eku-LK-p8Q"/>
                     </connections>
                 </viewController>
