@@ -9,6 +9,9 @@
 import UIKit
 import os.log
 import FirebaseAuth
+import FirebaseStorage
+import FirebaseDatabase
+import SDWebImage
 
 class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -31,7 +34,10 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     @IBOutlet weak var expiryDateSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var uploadProgressBar: UIProgressView!
     var product: Product?
+    private var databaseRef: DatabaseReference!
+    private var storageRef: StorageReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +54,9 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         
         // Enable the Save button only if the name text field has a valid name.
         updateSaveButtonState()
+        storageRef = Storage.storage().reference().child("products")
+        databaseRef = Database.database().reference().child("products")
+        uploadProgressBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,59 +112,6 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             os_log("The cancel button was pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        
-        // Processing field text
-        let noPriceGiven = "0.00000"
-        let name = productNameTextField.text ?? "Unnamed"
-        let photo = productImageView.image
-        let upc = productUPCTextField.text
-        let exp = expiryDateSwitch.isOn ? productExpiryDatePicker.date : nil
-        let id = product?.id ?? UUID().uuidString
-        let caSKU = productCASKUTextField.text
-        let comSKU = productCOMSKUTextField.text
-        let asin = productASINTextField.text
-        var amazonCAPrice: Double? = nil
-        if let amazonCAPriceText = amazonCAPriceTextField.text,
-            amazonCAPriceText != noPriceGiven {
-            amazonCAPrice = Double(amazonCAPriceText)
-        }
-        var amazonCOMPrice: Double? = nil
-        if let amazonCOMPriceText = amazonCOMPriceTextField.text,
-            amazonCOMPriceText != noPriceGiven {
-            amazonCOMPrice = Double(amazonCOMPriceText)
-        }
-        var ebayPrice: Double? = nil
-        if let ebayPriceText = ebayPriceTextField.text,
-            ebayPriceText != noPriceGiven {
-            ebayPrice = Double(ebayPriceText)
-        }
-        var fbaCAPrice: Double? = nil
-        if let fbaCAPriceText = fbaCAPriceTextField.text,
-            fbaCAPriceText != noPriceGiven {
-            fbaCAPrice = Double(fbaCAPriceText)
-        }
-        var fbaCOMPrice: Double? = nil
-        if let fbaCOMPriceText = fbaCOMPriceTextField.text,
-            fbaCOMPriceText != noPriceGiven {
-            fbaCOMPrice = Double(fbaCOMPriceText)
-        }
-        var imaplehousePrice: Double? = nil
-        if let imaplehousePriceText = imaplehousePriceTextField.text,
-            imaplehousePriceText != noPriceGiven {
-            imaplehousePrice = Double(imaplehousePriceText)
-        }
-        var fifibabyPrice: Double? = nil
-        if let fifibabyPriceText = fifibabyPriceTextField.text,
-            fifibabyPriceText != noPriceGiven {
-            fifibabyPrice = Double(fifibabyPriceText)
-        }
-        var maplepetPrice: Double? = nil
-        if let maplepetPriceText = maplepetsPriceTextField.text,
-            maplepetPriceText != noPriceGiven {
-            maplepetPrice = Double(maplepetPriceText)
-        }
-        // New product based on fields
-        product = Product(name: name, photo: photo, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, ref: nil)
     }
     //MARK: Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -221,13 +177,97 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             // Present alert for confirmiation before exiting
             let alert = UIAlertController(title: "Save", message: "Are you sure you want to save this item?", preferredStyle: .alert)
             let exitAction = UIAlertAction(title: "Save", style: .destructive) { (alert: UIAlertAction!) -> Void in
-                self.performSegue(withIdentifier:"saveProduct", sender: self.saveButton)
+                // Processing field text
+                let noPriceGiven = "0.00000"
+                let name = self.productNameTextField.text ?? "Unnamed"
+                let upc = self.productUPCTextField.text
+                let exp = self.expiryDateSwitch.isOn ? self.productExpiryDatePicker.date : nil
+                let id = self.product?.id ?? UUID().uuidString
+                let caSKU = self.productCASKUTextField.text
+                let comSKU = self.productCOMSKUTextField.text
+                let asin = self.productASINTextField.text
+                var amazonCAPrice: Double? = nil
+                if let amazonCAPriceText = self.amazonCAPriceTextField.text,
+                    amazonCAPriceText != noPriceGiven {
+                    amazonCAPrice = Double(amazonCAPriceText)
+                }
+                var amazonCOMPrice: Double? = nil
+                if let amazonCOMPriceText = self.amazonCOMPriceTextField.text,
+                    amazonCOMPriceText != noPriceGiven {
+                    amazonCOMPrice = Double(amazonCOMPriceText)
+                }
+                var ebayPrice: Double? = nil
+                if let ebayPriceText = self.ebayPriceTextField.text,
+                    ebayPriceText != noPriceGiven {
+                    ebayPrice = Double(ebayPriceText)
+                }
+                var fbaCAPrice: Double? = nil
+                if let fbaCAPriceText = self.fbaCAPriceTextField.text,
+                    fbaCAPriceText != noPriceGiven {
+                    fbaCAPrice = Double(fbaCAPriceText)
+                }
+                var fbaCOMPrice: Double? = nil
+                if let fbaCOMPriceText = self.fbaCOMPriceTextField.text,
+                    fbaCOMPriceText != noPriceGiven {
+                    fbaCOMPrice = Double(fbaCOMPriceText)
+                }
+                var imaplehousePrice: Double? = nil
+                if let imaplehousePriceText = self.imaplehousePriceTextField.text,
+                    imaplehousePriceText != noPriceGiven {
+                    imaplehousePrice = Double(imaplehousePriceText)
+                }
+                var fifibabyPrice: Double? = nil
+                if let fifibabyPriceText = self.fifibabyPriceTextField.text,
+                    fifibabyPriceText != noPriceGiven {
+                    fifibabyPrice = Double(fifibabyPriceText)
+                }
+                var maplepetPrice: Double? = nil
+                if let maplepetPriceText = self.maplepetsPriceTextField.text,
+                    maplepetPriceText != noPriceGiven {
+                    maplepetPrice = Double(maplepetPriceText)
+                }
+                // Do Image Upload and update image url in DB
+                let imageData = UIImageJPEGRepresentation(self.productImageView.image!, 0.8)!
+                // set upload path
+                let filePath = "\(self.product!.id)"
+                let metaData = StorageMetadata()
+                let uploadTask = self.storageRef.child(filePath).putData(imageData, metadata: metaData){(metaData,error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }else{
+                        // Store downloadURL
+                        self.storageRef.child(filePath).downloadURL { (url, error) in
+                            guard let imageURL = url else {
+                                // Uh-oh, an error occurred!
+                                os_log("Unable to get download URL!")
+                                return
+                            }
+                            // New product based on fields
+                            self.product = Product(name: name, imageURL: imageURL, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, ref: nil)
+                            self.performSegue(withIdentifier:"saveProduct", sender: self.saveButton)
+                        }
+                    }
+                }
+                uploadTask.observe(.progress) { snapshot in
+                    // Upload reported progress
+                    let percentComplete = Float(snapshot.progress!.completedUnitCount) / Float(snapshot.progress!.totalUnitCount)
+                    self.uploadProgressBar.isHidden = false
+                    self.uploadProgressBar.progress = percentComplete
+                }
+                uploadTask.observe(.success) { snapshot in
+                    // Upload completed successfully
+                    print("DONE UPLOAD")
+                    // Remove all observers
+                    uploadTask.removeAllObservers()
+                    self.uploadProgressBar.isHidden = true
+                }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) -> Void in
             }
             alert.addAction(exitAction)
             alert.addAction(cancelAction)
-            present(alert, animated: true, completion:nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     //MARK: Private Methods
@@ -285,11 +325,11 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         }
     }
     private func setProductFields(to product: Product){
-        print(product)
+        print(product.id)
         // Set field values only if in see detail mode
         navigationItem.title = product.name
         productNameTextField.text = product.name
-        productImageView.image = product.photo ?? #imageLiteral(resourceName: "defaultPhoto")
+        productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .progressiveDownload])
         productUPCTextField.text = product.upcEAN ?? "-"
         productASINTextField.text = product.asin ?? "-"
         productCOMSKUTextField.text = product.comSKU ?? "-"

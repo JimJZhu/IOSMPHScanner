@@ -11,6 +11,7 @@ import os.log
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import FirebaseStorage
 
 class ProductTableViewController: UITableViewController {
     
@@ -21,15 +22,18 @@ class ProductTableViewController: UITableViewController {
     private var products = [Product]()
     private var filteredProducts = [Product]()
     private let searchController = UISearchController(searchResultsController: nil)
-    private var ref: DatabaseReference!
+    private var databaseRef: DatabaseReference!
+    private var storageRef: StorageReference!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Gets Database reference
-        ref = Database.database().reference().child("products")
+        // Gets firebase references
+        databaseRef = Database.database().reference().child("products")
+        storageRef = Storage.storage().reference().child("products")
+        
         // Loads products
-        loadProducts(from: ref)
+        loadProducts(from: databaseRef)
         
         // Setup the Search Controller
         searchController.searchResultsUpdater = self
@@ -77,7 +81,6 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            print(products.count)
             if isFiltering(){
                 let toBeDeleted = filteredProducts[indexPath.row]
                 var count = 0
@@ -93,10 +96,9 @@ class ProductTableViewController: UITableViewController {
                 products.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
-            print(products.count)
             let alert = UIAlertController(title: "Deleting Disabled", message: "Deleting from database is disabled. The deleted item will return after refreshing.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
+                os_log("The \"OK\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         } else if editingStyle == .insert {
@@ -134,7 +136,7 @@ class ProductTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func unwindToProductList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ProductViewController, let product = sourceViewController.product {
-            let productRef = self.ref.child(product.id)
+            let productRef = self.databaseRef.child(product.id)
             productRef.setValue(product.toAnyObject())
         }
     }
@@ -149,6 +151,7 @@ class ProductTableViewController: UITableViewController {
                 guard let product = Product(snapshot: productSnapshot) else{
                     fatalError("Unable to instantiate product")
                 }
+                // Download the image on a background thread, so our UI can still update
                 self.products += [product]
             }
             self.tableView.reloadData()
@@ -172,10 +175,10 @@ class ProductTableViewController: UITableViewController {
             }
             cell.expiryDateLabel.text = formatter.string(from: exp)
         }else{
-            cell.expiryDateLabel.text = "-"
+            cell.expiryDateLabel.text = "No EXP"
         }
-        cell.productImageView.image = product.photo
-        cell.upcCodeLabel.text = product.upcEAN ?? "-"
+        cell.productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .progressiveDownload])
+        cell.upcCodeLabel.text = product.upcEAN ?? "-No UPC-"
     }
     
     func searchBarIsEmpty() -> Bool {

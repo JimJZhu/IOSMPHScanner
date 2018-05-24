@@ -14,7 +14,7 @@ class Product{
     //MARK: Properties
     let ref: DatabaseReference?
     var name: String
-    var photo: UIImage?
+    var imageURL: URL?
     let id: String
     var exp: Date?
     var amazonCAPrice: Double?
@@ -30,9 +30,9 @@ class Product{
     var maplepetPrice: Double?
     var upcEAN: String?
     let dateFormatter: DateFormatter
-    
+
     //MARK: Initializations
-    init?(name: String, photo: UIImage?, id: String, upcEAN: String?, exp: Date?, amazonCAPrice: Double?, amazonCOMPrice: Double?, asin: String?, caSKU: String?, comSKU: String?, fbaCAPrice: Double?, fbaCOMPrice: Double?, ebayPrice: Double?, fifibabyPrice: Double?, imaplehousePrice: Double?, maplepetPrice: Double?, ref: DatabaseReference?) {
+    init?(name: String, imageURL: URL?, id: String, upcEAN: String?, exp: Date?, amazonCAPrice: Double?, amazonCOMPrice: Double?, asin: String?, caSKU: String?, comSKU: String?, fbaCAPrice: Double?, fbaCOMPrice: Double?, ebayPrice: Double?, fifibabyPrice: Double?, imaplehousePrice: Double?, maplepetPrice: Double?, ref: DatabaseReference?) {
         guard !name.isEmpty else{
             return nil
         }
@@ -47,7 +47,7 @@ class Product{
         self.ref = ref
         self.id = id
         self.name = name
-        self.photo = photo
+        self.imageURL = imageURL
         self.amazonCAPrice = amazonCAPrice
         self.amazonCOMPrice = amazonCOMPrice
         self.asin = asin
@@ -69,7 +69,6 @@ class Product{
             let name = value["name"] as? String else {
             return nil
         }
-        
         self.dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
@@ -77,7 +76,7 @@ class Product{
         self.ref = snapshot.ref
         self.id = snapshot.key
         self.name = name
-        self.photo = nil
+        self.asin = value["asin"] as? String
         if let amazonCAPriceText = value["amzn_ca_price"] as? String{
             self.amazonCAPrice = Double(amazonCAPriceText)
         }else{
@@ -118,6 +117,11 @@ class Product{
         }else{
             self.maplepetPrice = nil
         }
+        if let imageURLText = value["image_url"] as? String{
+            self.imageURL = URL(string: imageURLText)
+        }else{
+            self.imageURL = nil
+        }
         self.asin = value["asin"] as? String
         self.caSKU = value["ca_sku"] as? String
         self.comSKU = value["com_sku"] as? String
@@ -139,7 +143,6 @@ class Product{
         var fifibabyPriceString: String = ""
         var imaplehousePriceString: String = ""
         var maplepetPriceString: String = ""
-        
         if let amazonCAPrice = amazonCAPrice{
             amazonCAPriceString = String(format:"%.5f", amazonCAPrice)
         }
@@ -181,7 +184,8 @@ class Product{
             "fifibaby_price" : fifibabyPriceString,
             "imaplehouse_price" : imaplehousePriceString,
             "maplepet_price" : maplepetPriceString,
-            "name" : name
+            "name" : name,
+            "imageURL" : imageURL?.absoluteString ?? "idklol"
         ]
     }
 }
