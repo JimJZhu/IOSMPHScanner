@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FEFDF94394FDE083BEE1B52 /* Pods_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDB506CA22D1611775D3034 /* Pods_Scanner.framework */; };
 		380A5D1820B5D03B00A6A5BF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1720B5D03B00A6A5BF /* LoginViewController.swift */; };
 		380A5D1A20B5DDF500A6A5BF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */; };
 		380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */; };
+		385E051620B84AC800E37A29 /* ModalLoadingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */; };
 		38CBBA4420ACB4F0007561B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */; };
 		38CBBA4620ACB4F0007561B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4520ACB4F0007561B7 /* ViewController.swift */; };
 		38CBBA4920ACB4F0007561B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4720ACB4F0007561B7 /* Main.storyboard */; };
@@ -21,13 +23,13 @@
 		38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA6120ADE178007561B7 /* ProductViewController.swift */; };
 		38CFE03C20B143D3003DEB9A /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFE03B20B143D3003DEB9A /* QRScannerController.swift */; };
 		38CFE03E20B279B0003DEB9A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */; };
-		72D9B11D3293DB1D350D9779 /* Pods_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E431DB4B38FEF3FB5C7033 /* Pods_Scanner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		380A5D1720B5D03B00A6A5BF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
+		385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalLoadingWindow.swift; sourceTree = "<group>"; };
 		3866114120B5C69D00D55A25 /* Scanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scanner.entitlements; sourceTree = "<group>"; };
 		38CBBA4020ACB4EF007561B7 /* Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,9 +44,9 @@
 		38CBBA6120ADE178007561B7 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		38CFE03B20B143D3003DEB9A /* QRScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8DA4AF1F088C7D90FA7A45EE /* Pods-Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.release.xcconfig"; sourceTree = "<group>"; };
-		B7E431DB4B38FEF3FB5C7033 /* Pods_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9F4B6ADDFA42A96CF28BE14 /* Pods-Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.debug.xcconfig"; sourceTree = "<group>"; };
+		8C45013115472EDDED26A7E6 /* Pods-Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.release.xcconfig"; sourceTree = "<group>"; };
+		D160F8F8AA27F20553768529 /* Pods-Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.debug.xcconfig"; sourceTree = "<group>"; };
+		DEDB506CA22D1611775D3034 /* Pods_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,18 +54,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72D9B11D3293DB1D350D9779 /* Pods_Scanner.framework in Frameworks */,
+				2FEFDF94394FDE083BEE1B52 /* Pods_Scanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		385E051420B84A8E00E37A29 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */,
+				385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3866113E20B4A9AC00D55A25 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				38CBBA5520ACBAD8007561B7 /* Product.swift */,
-				38CBBA5720ACBF1C007561B7 /* ProductTableViewCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -97,8 +107,8 @@
 			children = (
 				38CBBA4220ACB4EF007561B7 /* Scanner */,
 				38CBBA4120ACB4EF007561B7 /* Products */,
-				E5F2FA88D65B2DA447FE47BC /* Pods */,
-				B4AD6222571832224A79B19B /* Frameworks */,
+				9CBC6470D96ED3B9397E11C1 /* Pods */,
+				5B0CAEDF99D706FE7B3D5358 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +123,7 @@
 		38CBBA4220ACB4EF007561B7 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
+				385E051420B84A8E00E37A29 /* Views */,
 				3866114120B5C69D00D55A25 /* Scanner.entitlements */,
 				3866114020B4A9DF00D55A25 /* Supporting Files */,
 				3866113F20B4A9C400D55A25 /* Controllers */,
@@ -124,19 +135,19 @@
 			path = Scanner;
 			sourceTree = "<group>";
 		};
-		B4AD6222571832224A79B19B /* Frameworks */ = {
+		5B0CAEDF99D706FE7B3D5358 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B7E431DB4B38FEF3FB5C7033 /* Pods_Scanner.framework */,
+				DEDB506CA22D1611775D3034 /* Pods_Scanner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E5F2FA88D65B2DA447FE47BC /* Pods */ = {
+		9CBC6470D96ED3B9397E11C1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C9F4B6ADDFA42A96CF28BE14 /* Pods-Scanner.debug.xcconfig */,
-				8DA4AF1F088C7D90FA7A45EE /* Pods-Scanner.release.xcconfig */,
+				D160F8F8AA27F20553768529 /* Pods-Scanner.debug.xcconfig */,
+				8C45013115472EDDED26A7E6 /* Pods-Scanner.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -148,11 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 38CBBA5220ACB4F0007561B7 /* Build configuration list for PBXNativeTarget "Scanner" */;
 			buildPhases = (
-				C7CC72A14C241605412418FF /* [CP] Check Pods Manifest.lock */,
+				6985819D1846597EC68575EC /* [CP] Check Pods Manifest.lock */,
 				38CBBA3C20ACB4EF007561B7 /* Sources */,
 				38CBBA3D20ACB4EF007561B7 /* Frameworks */,
 				38CBBA3E20ACB4EF007561B7 /* Resources */,
-				EEBBABC11448066699BC616E /* [CP] Embed Pods Frameworks */,
+				8DE9F310FBB7AEB31DAEB721 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -216,7 +227,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C7CC72A14C241605412418FF /* [CP] Check Pods Manifest.lock */ = {
+		6985819D1846597EC68575EC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -234,13 +245,14 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EEBBABC11448066699BC616E /* [CP] Embed Pods Frameworks */ = {
+		8DE9F310FBB7AEB31DAEB721 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Scanner/Pods-Scanner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -249,6 +261,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -273,6 +286,7 @@
 				38CFE03C20B143D3003DEB9A /* QRScannerController.swift in Sources */,
 				380A5D1820B5D03B00A6A5BF /* LoginViewController.swift in Sources */,
 				38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */,
+				385E051620B84AC800E37A29 /* ModalLoadingWindow.swift in Sources */,
 				38CBBA5620ACBAD8007561B7 /* Product.swift in Sources */,
 				380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */,
 				38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */,
@@ -418,7 +432,7 @@
 		};
 		38CBBA5320ACB4F0007561B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9F4B6ADDFA42A96CF28BE14 /* Pods-Scanner.debug.xcconfig */;
+			baseConfigurationReference = D160F8F8AA27F20553768529 /* Pods-Scanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Scanner/Scanner.entitlements;
@@ -439,7 +453,7 @@
 		};
 		38CBBA5420ACB4F0007561B7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8DA4AF1F088C7D90FA7A45EE /* Pods-Scanner.release.xcconfig */;
+			baseConfigurationReference = 8C45013115472EDDED26A7E6 /* Pods-Scanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Scanner/Scanner.entitlements;

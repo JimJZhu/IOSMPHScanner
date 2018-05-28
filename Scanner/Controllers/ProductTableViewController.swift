@@ -96,7 +96,7 @@ class ProductTableViewController: UITableViewController {
                 products.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
-            let alert = UIAlertController(title: "Deleting Disabled", message: "Deleting from database is disabled. The deleted item will return after refreshing.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Deleting Disabled", message: "Item will not be removed from database.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                 os_log("The \"OK\" alert occured.")
             }))
@@ -167,18 +167,29 @@ class ProductTableViewController: UITableViewController {
             let daysBeforeWarning = 90.0
             let warningDate = Date(timeInterval: daysBeforeWarning*secondsInDay, since: Date())
             if exp < Date() {
-                cell.expiryDateLabel.textColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
+                cell.expiryDateLabel.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             } else if exp < warningDate {
                 cell.expiryDateLabel.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
             } else {
-                cell.expiryDateLabel.textColor = #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1)
+                cell.expiryDateLabel.textColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
             }
-            cell.expiryDateLabel.text = formatter.string(from: exp)
+            cell.expiryDateLabel.text = "Expires: \(formatter.string(from: exp))"
         }else{
-            cell.expiryDateLabel.text = "No EXP"
+            cell.expiryDateLabel.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            cell.expiryDateLabel.text = "Expires:"
         }
         cell.productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .progressiveDownload])
-        cell.upcCodeLabel.text = product.upcEAN ?? "-No UPC-"
+        cell.upcCodeLabel.text = "UPC: \(product.upcEAN ?? "-")"
+        cell.asinLabel.text = "ASIN: \(product.asin ?? "-")"
+        cell.skuLabel.text = "SKU: \(product.caSKU ?? "-")"
+        cell.priceLabel.text = "$\(getHighestPrice(for: product))"
+        cell.stockLabel.text = "Stock: \(String(product.stock ?? 0))"
+    }
+    
+    func getHighestPrice(for product: Product) -> String{
+        let priceArray = [product.amazonCAPrice ?? 0, product.amazonCOMPrice ?? 0,
+                          product.fifibabyPrice ?? 0, product.imaplehousePrice ?? 0,product.fbaCOMPrice ?? 0]
+        return String(format: "%.2f", priceArray.max() ?? 0)
     }
     
     func searchBarIsEmpty() -> Bool {

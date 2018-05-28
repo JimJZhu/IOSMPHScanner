@@ -15,6 +15,10 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var expiryDateLabel: UILabel!
     @IBOutlet weak var upcCodeLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var skuLabel: UILabel!
+    @IBOutlet weak var asinLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var stockLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

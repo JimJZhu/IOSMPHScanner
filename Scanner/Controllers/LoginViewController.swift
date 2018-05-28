@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController{
 
     // MARK: - Outlets
     @IBOutlet weak var emailTextField: UITextField!
@@ -18,6 +18,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.emailTextField.delegate = self;
+        self.passwordTextField.delegate = self;
 
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
@@ -32,7 +34,6 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
@@ -71,12 +72,8 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField {
-            textField.becomeFirstResponder()
-        }
-        if textField == passwordTextField {
-            textField.resignFirstResponder()
-        }
+        textField.resignFirstResponder()
+        login(UIButton(type: .custom))
         return true
     }
 }
