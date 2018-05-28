@@ -12,6 +12,7 @@
 		380A5D1A20B5DDF500A6A5BF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */; };
 		380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */; };
 		385E051620B84AC800E37A29 /* ModalLoadingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */; };
+		385E051E20BC40B800E37A29 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051D20BC40B800E37A29 /* HomeViewController.swift */; };
 		38CBBA4420ACB4F0007561B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */; };
 		38CBBA4620ACB4F0007561B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4520ACB4F0007561B7 /* ViewController.swift */; };
 		38CBBA4920ACB4F0007561B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4720ACB4F0007561B7 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalLoadingWindow.swift; sourceTree = "<group>"; };
+		385E051D20BC40B800E37A29 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3866114120B5C69D00D55A25 /* Scanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scanner.entitlements; sourceTree = "<group>"; };
 		38CBBA4020ACB4EF007561B7 /* Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				38CFE03B20B143D3003DEB9A /* QRScannerController.swift */,
 				380A5D1720B5D03B00A6A5BF /* LoginViewController.swift */,
 				380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */,
+				385E051D20BC40B800E37A29 /* HomeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */,
 				38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */,
 				380A5D1A20B5DDF500A6A5BF /* SettingsViewController.swift in Sources */,
+				385E051E20BC40B800E37A29 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
