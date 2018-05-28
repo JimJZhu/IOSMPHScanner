@@ -28,13 +28,14 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     @IBOutlet weak var fbaCAPriceTextField: UITextField!
     @IBOutlet weak var fbaCOMPriceTextField: UITextField!
     @IBOutlet weak var fifibabyPriceTextField: UITextField!
+    @IBOutlet weak var stockTextField: UITextField!
     @IBOutlet weak var imaplehousePriceTextField: UITextField!
     @IBOutlet weak var maplepetsPriceTextField: UITextField!
     @IBOutlet weak var productExpiryDatePicker: UIDatePicker!
     @IBOutlet weak var expiryDateSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var uploadProgressBar: UIProgressView!
+    private var loadingScreen: ModalLoadingWindow!
     var product: Product?
     private var databaseRef: DatabaseReference!
     private var storageRef: StorageReference!
@@ -56,7 +57,9 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         updateSaveButtonState()
         storageRef = Storage.storage().reference().child("products")
         databaseRef = Database.database().reference().child("products")
-        uploadProgressBar.isHidden = true
+        loadingScreen = ModalLoadingWindow(frame: self.view.bounds)
+        loadingScreen?.title = "Updating..."
+        loadingScreen?.subTitle = "Please wait"
     }
 
     override func didReceiveMemoryWarning() {
@@ -226,17 +229,28 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
                     maplepetPriceText != noPriceGiven {
                     maplepetPrice = Double(maplepetPriceText)
                 }
+                var stock: Int? = nil
+                if let stockText = self.stockTextField.text{
+                    stock = Int(stockText)
+                }
                 // Do Image Upload and update image url in DB
                 let imageData = UIImageJPEGRepresentation(self.productImageView.image!, 0.8)!
+                
                 // set upload path
                 let filePath = "\(self.product!.id)"
                 let metaData = StorageMetadata()
+                metaData.contentType = "image/jpeg"
+                
+                // Add loading modal
+                self.view.addSubview(self.loadingScreen!)
+                
+                // Begin upload
                 let uploadTask = self.storageRef.child(filePath).putData(imageData, metadata: metaData){(metaData,error) in
                     if let error = error {
                         print(error.localizedDescription)
                         return
                     }else{
-                        // Store downloadURL
+                        // Retrieve download URL
                         self.storageRef.child(filePath).downloadURL { (url, error) in
                             guard let imageURL = url else {
                                 // Uh-oh, an error occurred!
@@ -244,23 +258,16 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
                                 return
                             }
                             // New product based on fields
-                            self.product = Product(name: name, imageURL: imageURL, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, ref: nil)
+                            self.product = Product(name: name, imageURL: imageURL, id: id, upcEAN: upc, exp: exp, amazonCAPrice: amazonCAPrice, amazonCOMPrice: amazonCOMPrice, asin: asin, caSKU: caSKU, comSKU: comSKU, fbaCAPrice: fbaCAPrice, fbaCOMPrice: fbaCOMPrice, ebayPrice: ebayPrice, fifibabyPrice: fifibabyPrice, imaplehousePrice: imaplehousePrice, maplepetPrice: maplepetPrice, stock: stock, ref: nil)
                             self.performSegue(withIdentifier:"saveProduct", sender: self.saveButton)
                         }
                     }
                 }
-                uploadTask.observe(.progress) { snapshot in
-                    // Upload reported progress
-                    let percentComplete = Float(snapshot.progress!.completedUnitCount) / Float(snapshot.progress!.totalUnitCount)
-                    self.uploadProgressBar.isHidden = false
-                    self.uploadProgressBar.progress = percentComplete
-                }
                 uploadTask.observe(.success) { snapshot in
                     // Upload completed successfully
                     print("DONE UPLOAD")
-                    // Remove all observers
                     uploadTask.removeAllObservers()
-                    self.uploadProgressBar.isHidden = true
+                    self.loadingScreen?.hide()
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) -> Void in
@@ -298,8 +305,30 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             imaplehousePriceTextField.isEnabled = true
             fifibabyPriceTextField.isEnabled = true
             maplepetsPriceTextField.isEnabled = true
+            stockTextField.isEnabled = true
+            expiryDateSwitch.isEnabled = true
+            
+            // Change look of all controls
+            productNameTextField.borderStyle = .roundedRect
+            productUPCTextField.borderStyle = .roundedRect
+            productASINTextField.borderStyle = .roundedRect
+            productCOMSKUTextField.borderStyle = .roundedRect
+            productCASKUTextField.borderStyle = .roundedRect
+            amazonCOMPriceTextField.borderStyle = .roundedRect
+            amazonCAPriceTextField.borderStyle = .roundedRect
+            ebayPriceTextField.borderStyle = .roundedRect
+            fbaCOMPriceTextField.borderStyle = .roundedRect
+            fbaCAPriceTextField.borderStyle = .roundedRect
+            imaplehousePriceTextField.borderStyle = .roundedRect
+            fifibabyPriceTextField.borderStyle = .roundedRect
+            maplepetsPriceTextField.borderStyle = .roundedRect
+            stockTextField.borderStyle = .roundedRect
+            
+            // Set Date picker
             expiryDateSwitch.isEnabled = true
             productExpiryDatePicker.isEnabled = expiryDateSwitch.isOn
+            
+            // Switch buttons
             saveButton.title = "Save"
             cancelButton.title = "Cancel"
         } else {
@@ -318,8 +347,27 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             imaplehousePriceTextField.isEnabled = false
             fifibabyPriceTextField.isEnabled = false
             maplepetsPriceTextField.isEnabled = false
+            stockTextField.isEnabled = false
             productExpiryDatePicker.isEnabled = false
             expiryDateSwitch.isEnabled = false
+            
+            // Change look of all controls
+            productNameTextField.borderStyle = .none
+            productUPCTextField.borderStyle = .none
+            productASINTextField.borderStyle = .none
+            productCOMSKUTextField.borderStyle = .none
+            productCASKUTextField.borderStyle = .none
+            amazonCOMPriceTextField.borderStyle = .none
+            amazonCAPriceTextField.borderStyle = .none
+            ebayPriceTextField.borderStyle = .none
+            fbaCOMPriceTextField.borderStyle = .none
+            fbaCAPriceTextField.borderStyle = .none
+            imaplehousePriceTextField.borderStyle = .none
+            fifibabyPriceTextField.borderStyle = .none
+            maplepetsPriceTextField.borderStyle = .none
+            stockTextField.borderStyle = .none
+            
+            // Switch buttons
             saveButton.title = "Edit"
             cancelButton.title = "Back"
         }
@@ -342,6 +390,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         imaplehousePriceTextField.text = String(format:"%.5f", product.imaplehousePrice ?? "0")
         fifibabyPriceTextField.text = String(format:"%.5f", product.fifibabyPrice ?? "0")
         maplepetsPriceTextField.text = String(format:"%.5f", product.maplepetPrice ?? "0")
+        stockTextField.text = String(product.stock ?? 0)
         // Turns off picker if no date is given
         if let exp = product.exp {
             productExpiryDatePicker.date = exp

@@ -29,10 +29,11 @@ class Product{
     var imaplehousePrice: Double?
     var maplepetPrice: Double?
     var upcEAN: String?
+    var stock: Int?
     let dateFormatter: DateFormatter
 
     //MARK: Initializations
-    init?(name: String, imageURL: URL?, id: String, upcEAN: String?, exp: Date?, amazonCAPrice: Double?, amazonCOMPrice: Double?, asin: String?, caSKU: String?, comSKU: String?, fbaCAPrice: Double?, fbaCOMPrice: Double?, ebayPrice: Double?, fifibabyPrice: Double?, imaplehousePrice: Double?, maplepetPrice: Double?, ref: DatabaseReference?) {
+    init?(name: String, imageURL: URL?, id: String, upcEAN: String?, exp: Date?, amazonCAPrice: Double?, amazonCOMPrice: Double?, asin: String?, caSKU: String?, comSKU: String?, fbaCAPrice: Double?, fbaCOMPrice: Double?, ebayPrice: Double?, fifibabyPrice: Double?, imaplehousePrice: Double?, maplepetPrice: Double?, stock: Int?, ref: DatabaseReference?) {
         guard !name.isEmpty else{
             return nil
         }
@@ -61,6 +62,7 @@ class Product{
         self.imaplehousePrice = imaplehousePrice
         self.maplepetPrice = maplepetPrice
         self.upcEAN = upcEAN
+        self.stock = stock
     }
     
     init?(snapshot: DataSnapshot) {
@@ -131,6 +133,7 @@ class Product{
             self.exp = nil
         }
         self.upcEAN = value["upc_ean"] as? String
+        self.stock = value["stock"] as? Int
     }
     
     func toAnyObject() -> NSDictionary {
@@ -185,7 +188,8 @@ class Product{
             "imaplehouse_price" : imaplehousePriceString,
             "maplepet_price" : maplepetPriceString,
             "name" : name,
-            "imageURL" : imageURL?.absoluteString ?? "idklol"
+            "image_url" : imageURL?.absoluteString ?? "idklol",
+            "stock" : stock ?? "0"
         ]
     }
 }
