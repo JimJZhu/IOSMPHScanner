@@ -182,15 +182,10 @@ class ProductTableViewController: UITableViewController {
         cell.upcCodeLabel.text = "UPC: \(product.upcEAN ?? "-")"
         cell.asinLabel.text = "ASIN: \(product.asin ?? "-")"
         cell.skuLabel.text = "SKU: \(product.caSKU ?? "-")"
-        cell.priceLabel.text = "$\(getHighestPrice(for: product))"
+        cell.priceLabel.text = product.highestPrice.priceString
         cell.stockLabel.text = "Stock: \(String(product.stock ?? 0))"
     }
-    
-    func getHighestPrice(for product: Product) -> String{
-        let priceArray = [product.amazonCAPrice ?? 0, product.amazonCOMPrice ?? 0,
-                          product.fifibabyPrice ?? 0, product.imaplehousePrice ?? 0,product.fbaCOMPrice ?? 0]
-        return String(format: "%.2f", priceArray.max() ?? 0)
-    }
+
     
     func searchBarIsEmpty() -> Bool {
         // Returns true if the text is empty or nil
@@ -218,5 +213,10 @@ extension ProductTableViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+extension Double{
+    var priceString : String{
+        return "$\(String(format: "%.2f", self))"
     }
 }

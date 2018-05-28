@@ -237,7 +237,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
                 let imageData = UIImageJPEGRepresentation(self.productImageView.image!, 0.8)!
                 
                 // set upload path
-                let filePath = "\(self.product!.id)"
+                let filePath = "\(id)"
                 let metaData = StorageMetadata()
                 metaData.contentType = "image/jpeg"
                 
@@ -378,18 +378,18 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         navigationItem.title = product.name
         productNameTextField.text = product.name
         productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .progressiveDownload])
-        productUPCTextField.text = product.upcEAN ?? "-"
-        productASINTextField.text = product.asin ?? "-"
-        productCOMSKUTextField.text = product.comSKU ?? "-"
-        productCASKUTextField.text = product.caSKU ?? "-"
-        amazonCOMPriceTextField.text = String(format:"%.5f", product.amazonCOMPrice ?? "0")
-        amazonCAPriceTextField.text = String(format:"%.5f", product.amazonCAPrice ?? "0")
-        ebayPriceTextField.text = String(format:"%.5f", product.ebayPrice ?? "0")
-        fbaCOMPriceTextField.text = String(format:"%.5f", product.fbaCOMPrice ?? "0")
-        fbaCAPriceTextField.text = String(format:"%.5f", product.fbaCAPrice ?? "0")
-        imaplehousePriceTextField.text = String(format:"%.5f", product.imaplehousePrice ?? "0")
-        fifibabyPriceTextField.text = String(format:"%.5f", product.fifibabyPrice ?? "0")
-        maplepetsPriceTextField.text = String(format:"%.5f", product.maplepetPrice ?? "0")
+        productUPCTextField.text = product.upcEAN ?? ""
+        productASINTextField.text = product.asin ?? ""
+        productCOMSKUTextField.text = product.comSKU ?? ""
+        productCASKUTextField.text = product.caSKU ?? ""
+        amazonCOMPriceTextField.text = product.amazonCOMPrice.longPriceString
+        amazonCAPriceTextField.text = product.amazonCAPrice.longPriceString
+        ebayPriceTextField.text = product.ebayPrice.longPriceString
+        fbaCOMPriceTextField.text =  product.fbaCOMPrice.longPriceString
+        fbaCAPriceTextField.text =  product.fbaCAPrice.longPriceString
+        imaplehousePriceTextField.text = product.imaplehousePrice.longPriceString
+        fifibabyPriceTextField.text = product.fifibabyPrice.longPriceString
+        maplepetsPriceTextField.text =  product.maplepetPrice.longPriceString
         stockTextField.text = String(product.stock ?? 0)
         // Turns off picker if no date is given
         if let exp = product.exp {
