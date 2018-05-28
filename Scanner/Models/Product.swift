@@ -31,7 +31,11 @@ class Product{
     var upcEAN: String?
     var stock: Int?
     let dateFormatter: DateFormatter
-
+    var highestPrice: Double {
+        let priceArray = [amazonCAPrice ?? 0, amazonCOMPrice ?? 0,
+                          fifibabyPrice ?? 0, imaplehousePrice ?? 0,fbaCOMPrice ?? 0]
+        return priceArray.max() ?? 0
+    }
     //MARK: Initializations
     init?(name: String, imageURL: URL?, id: String, upcEAN: String?, exp: Date?, amazonCAPrice: Double?, amazonCOMPrice: Double?, asin: String?, caSKU: String?, comSKU: String?, fbaCAPrice: Double?, fbaCOMPrice: Double?, ebayPrice: Double?, fifibabyPrice: Double?, imaplehousePrice: Double?, maplepetPrice: Double?, stock: Int?, ref: DatabaseReference?) {
         guard !name.isEmpty else{
@@ -41,9 +45,9 @@ class Product{
             return nil
         }
         
-        self.dateFormatter = DateFormatter()
+        dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         self.ref = ref
         self.id = id
@@ -71,10 +75,9 @@ class Product{
             let name = value["name"] as? String else {
             return nil
         }
-        self.dateFormatter = DateFormatter()
+        dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-        
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         self.ref = snapshot.ref
         self.id = snapshot.key
         self.name = name
@@ -137,59 +140,42 @@ class Product{
     }
     
     func toAnyObject() -> NSDictionary {
-        var amazonCAPriceString: String = ""
-        var amazonCOMPriceString: String = ""
-        var ebayPriceString: String = ""
-        var fbaCAPriceString: String = ""
-        var fbaCOMPriceString: String = ""
-        var expString: String = ""
-        var fifibabyPriceString: String = ""
-        var imaplehousePriceString: String = ""
-        var maplepetPriceString: String = ""
-        if let amazonCAPrice = amazonCAPrice{
-            amazonCAPriceString = String(format:"%.5f", amazonCAPrice)
-        }
-        if let amazonCOMPrice = amazonCOMPrice{
-            amazonCOMPriceString = String(format:"%.5f", amazonCOMPrice)
-        }
-        if let fbaCAPrice = fbaCAPrice{
-            fbaCAPriceString = String(format:"%.5f", fbaCAPrice)
-        }
-        if let fbaCOMPrice = fbaCOMPrice{
-            fbaCOMPriceString = String(format:"%.5f", fbaCOMPrice)
-        }
-        if let ebayPrice = ebayPrice{
-            ebayPriceString = String(format:"%.5f", ebayPrice)
-        }
-        if let exp = exp{
-            expString = dateFormatter.string(from: exp)
-        }
-        if let fifibabyPrice = fifibabyPrice{
-            fifibabyPriceString = String(format:"%.5f", fifibabyPrice)
-        }
-        if let imaplehousePrice = imaplehousePrice{
-            imaplehousePriceString = String(format:"%.5f", imaplehousePrice)
-        }
-        if let maplepetPrice = maplepetPrice{
-            maplepetPriceString = String(format:"%.5f", maplepetPrice)
-        }
         return [
             "asin" : asin ?? "",
             "ca_sku" : caSKU ?? "",
             "com_sku" : comSKU ?? "",
-            "fba_ca_price" : fbaCAPriceString,
-            "fba_com_price" : fbaCOMPriceString,
+            "fba_ca_price" : fbaCAPrice.longPriceString,
+            "fba_com_price" : fbaCOMPrice.longPriceString,
             "upc_ean" : upcEAN ?? "",
-            "amzn_ca_price" : amazonCAPriceString,
-            "amzn_com_price" : amazonCOMPriceString,
-            "ebay_price" : ebayPriceString,
-            "exp" : expString,
-            "fifibaby_price" : fifibabyPriceString,
-            "imaplehouse_price" : imaplehousePriceString,
-            "maplepet_price" : maplepetPriceString,
+            "amzn_ca_price" : amazonCAPrice.longPriceString,
+            "amzn_com_price" : amazonCOMPrice.longPriceString,
+            "ebay_price" : ebayPrice.longPriceString,
+            "exp" : exp.isoDateString,
+            "fifibaby_price" : fifibabyPrice.longPriceString,
+            "imaplehouse_price" : imaplehousePrice.longPriceString,
+            "maplepet_price" : maplepetPrice.longPriceString,
             "name" : name,
             "image_url" : imageURL?.absoluteString ?? "idklol",
             "stock" : stock ?? "0"
         ]
+    }
+}
+extension Optional where Wrapped == Double {
+    var longPriceString: String {
+        if let value = self{
+            return String(format:"%.5f", value)
+        }
+        return ""
+    }
+}
+extension Optional where Wrapped == Date {
+    var isoDateString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        if let value = self{
+            return dateFormatter.string(from: value)
+        }
+        return ""
     }
 }
