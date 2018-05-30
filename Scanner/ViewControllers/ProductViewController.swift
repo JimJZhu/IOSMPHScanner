@@ -15,7 +15,7 @@ import SDWebImage
 
 class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    //MARK: Properties
+    //MARK: - Outlets
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameTextField: UITextField!
     @IBOutlet weak var productUPCTextField: UITextField!
@@ -35,6 +35,8 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     @IBOutlet weak var expiryDateSwitch: UISwitch!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    //MARK: - Properties
     private var loadingScreen: ModalLoadingWindow!
     var product: Product?
     private var databaseRef: DatabaseReference!
@@ -67,7 +69,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: UITextFieldDelegate
+    //MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         // Hide the keyboard.
         textField.resignFirstResponder()
@@ -87,7 +89,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             saveButton.isEnabled = false
         }
     }
-    //MARK: UIImagePickerControllerDelegate
+    //MARK: - UIImagePickerControllerDelegate
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
@@ -116,7 +118,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             return
         }
     }
-    //MARK: Actions
+    //MARK: - Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         let isPresentingInAddProductMode = presentingViewController is UITabBarController
         if isPresentingInAddProductMode {
@@ -277,7 +279,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
             present(alert, animated: true, completion: nil)
         }
     }
-    //MARK: Private Methods
+    //MARK: -  Private Methods
     private func updateSaveButtonState(){
         let text = productNameTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty && AuthHelper.isAdmin(user: Auth.auth().currentUser)

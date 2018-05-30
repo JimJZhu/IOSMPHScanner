@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class SettingsViewController: UIViewController {
 
-    // MARK: Outlets
+    // MARK: - Outlets
     @IBOutlet weak var accountTypeLabel: UILabel!
     @IBOutlet weak var privilegesLabel: UILabel!
     override func viewDidLoad() {

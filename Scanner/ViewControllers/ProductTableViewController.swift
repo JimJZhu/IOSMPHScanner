@@ -11,26 +11,24 @@ import os.log
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
-import FirebaseStorage
 
 class ProductTableViewController: UITableViewController {
     
-    //MARK: Outlets
+    //MARK: - Outlets
     @IBOutlet weak var newItemButton: UIBarButtonItem!
     
-    //MARK: Properties
+    //MARK: - Properties
     private var products = [Product]()
     private var filteredProducts = [Product]()
     private let searchController = UISearchController(searchResultsController: nil)
     private var databaseRef: DatabaseReference!
-    private var storageRef: StorageReference!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Gets firebase references
         databaseRef = Database.database().reference().child("products")
-        storageRef = Storage.storage().reference().child("products")
         
         // Loads products
         loadProducts(from: databaseRef)
@@ -133,14 +131,14 @@ class ProductTableViewController: UITableViewController {
         }
     }
 
-    //MARK: Actions
+    //MARK: - Actions
     @IBAction func unwindToProductList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? ProductViewController, let product = sourceViewController.product {
             let productRef = self.databaseRef.child(product.id)
             productRef.setValue(product.toAnyObject())
         }
     }
-    //MARK: Private Methods
+    //MARK: - Private Methods
     private func loadProducts(from ref: DatabaseReference){
         ref.observe(.value, with: {(snapshot) in
             self.products.removeAll()
