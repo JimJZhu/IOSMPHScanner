@@ -70,6 +70,7 @@ class LoginViewController: UIViewController{
     }
 }
 
+//MARK: - Extensions
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

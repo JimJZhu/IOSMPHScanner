@@ -9,5 +9,5 @@
 import Foundation
 
 enum SortMethods{
-    case ByName, ByHighestPrice, ByExpiryDate, ByStock
+    case Name, HighestPrice, ExpiryDate, Stock
 }

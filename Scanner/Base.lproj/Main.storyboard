@@ -191,6 +191,9 @@
                         <viewLayoutGuide key="safeArea" id="kXB-Vu-oWt"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" id="PkF-SF-58J"/>
+                    <connections>
+                        <outlet property="totalStockLabel" destination="A2J-x9-nob" id="uKf-f3-Scj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zLp-eK-e02" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

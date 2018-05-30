@@ -13,8 +13,7 @@
 		380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */; };
 		385E051620B84AC800E37A29 /* ModalLoadingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */; };
 		385E051E20BC40B800E37A29 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051D20BC40B800E37A29 /* HomeViewController.swift */; };
-		385E052020BC541700E37A29 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E051F20BC541700E37A29 /* ModelController.swift */; };
-		385E052320BC5CE800E37A29 /* SortMethodEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E052220BC5CE800E37A29 /* SortMethodEnum.swift */; };
+		385E052320BC5CE800E37A29 /* SortMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385E052220BC5CE800E37A29 /* SortMethod.swift */; };
 		38CBBA4420ACB4F0007561B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */; };
 		38CBBA4620ACB4F0007561B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA4520ACB4F0007561B7 /* ViewController.swift */; };
 		38CBBA4920ACB4F0007561B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CBBA4720ACB4F0007561B7 /* Main.storyboard */; };
@@ -34,8 +33,7 @@
 		380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		385E051520B84AC800E37A29 /* ModalLoadingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalLoadingWindow.swift; sourceTree = "<group>"; };
 		385E051D20BC40B800E37A29 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		385E051F20BC541700E37A29 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
-		385E052220BC5CE800E37A29 /* SortMethodEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMethodEnum.swift; sourceTree = "<group>"; };
+		385E052220BC5CE800E37A29 /* SortMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortMethod.swift; sourceTree = "<group>"; };
 		3866114120B5C69D00D55A25 /* Scanner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scanner.entitlements; sourceTree = "<group>"; };
 		38CBBA4020ACB4EF007561B7 /* Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CBBA4320ACB4F0007561B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,14 +74,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		385E052120BC541B00E37A29 /* Model Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				385E051F20BC541700E37A29 /* ModelController.swift */,
-			);
-			path = "Model Controllers";
-			sourceTree = "<group>";
-		};
 		3866113E20B4A9AC00D55A25 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +99,7 @@
 		3866114020B4A9DF00D55A25 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				385E052220BC5CE800E37A29 /* SortMethod.swift */,
 				380A5D1B20B5E3E500A6A5BF /* AuthHelper.swift */,
 				38CBBA4A20ACB4F0007561B7 /* Assets.xcassets */,
 				38CBBA4C20ACB4F0007561B7 /* LaunchScreen.storyboard */,
@@ -138,16 +129,14 @@
 		38CBBA4220ACB4EF007561B7 /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				385E051420B84A8E00E37A29 /* Views */,
 				3866114120B5C69D00D55A25 /* Scanner.entitlements */,
+				38CBBA4F20ACB4F0007561B7 /* Info.plist */,
+				38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */,
 				3866114020B4A9DF00D55A25 /* Supporting Files */,
+				385E051420B84A8E00E37A29 /* Views */,
 				3866113F20B4A9C400D55A25 /* ViewControllers */,
 				3866113E20B4A9AC00D55A25 /* Models */,
 				38CBBA4720ACB4F0007561B7 /* Main.storyboard */,
-				38CBBA4F20ACB4F0007561B7 /* Info.plist */,
-				38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */,
-				385E052120BC541B00E37A29 /* Model Controllers */,
-				385E052220BC5CE800E37A29 /* SortMethodEnum.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -302,7 +291,6 @@
 				38CBBA4420ACB4F0007561B7 /* AppDelegate.swift in Sources */,
 				38CFE03C20B143D3003DEB9A /* QRScannerController.swift in Sources */,
 				380A5D1820B5D03B00A6A5BF /* LoginViewController.swift in Sources */,
-				385E052020BC541700E37A29 /* ModelController.swift in Sources */,
 				38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */,
 				385E051620B84AC800E37A29 /* ModalLoadingWindow.swift in Sources */,
 				38CBBA5620ACBAD8007561B7 /* Product.swift in Sources */,
@@ -310,7 +298,7 @@
 				38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */,
 				380A5D1A20B5DDF500A6A5BF /* SettingsViewController.swift in Sources */,
 				385E051E20BC40B800E37A29 /* HomeViewController.swift in Sources */,
-				385E052320BC5CE800E37A29 /* SortMethodEnum.swift in Sources */,
+				385E052320BC5CE800E37A29 /* SortMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,13 +7,25 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class HomeViewController: UIViewController {
 
+    //MARK: - Outlets
+    @IBOutlet weak var totalStockLabel: UILabel!
+    
+    //MARK: - Properties
+    var databaseRef: DatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // Gets firebase references
+        databaseRef = Database.database().reference().child("products")
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
