@@ -16,11 +16,16 @@ class HomeViewController: UIViewController {
     
     //MARK: - Properties
     var databaseRef: DatabaseReference!
+    var labels: [UILabel]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        labels = createLabelArray(totalStockLabel)
         // Gets firebase references
         databaseRef = Database.database().reference().child("products")
+        // Load Data
+        loadData(from: databaseRef)
         // Do any additional setup after loading the view.
     }
     
@@ -44,4 +49,26 @@ class HomeViewController: UIViewController {
     }
     */
 
+    //MARK: - Private Functions
+    func loadData(from ref: DatabaseReference){
+        ref.observe(.value, with: {(snapshot) in
+            self.products.removeAll()
+            for child in snapshot.children{
+                guard let productSnapshot = child as? DataSnapshot else{
+                    fatalError("Unable to cast as DataSnapshot")
+                }
+                guard let product = Product(snapshot: productSnapshot) else{
+                    fatalError("Unable to instantiate product")
+                }
+                // Download the image on a background thread, so our UI can still update
+                self.products += [product]
+            }
+        })
+    }
+    func createLabelArray(with labels: UILabel...){
+        var array: [UILabel] = []
+        for label: UILabel in labels{
+            array.append(label)
+        }
+    }
 }
