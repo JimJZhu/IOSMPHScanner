@@ -47,6 +47,9 @@ class LoginViewController: UIViewController{
     
     // MARK: - Actions
     @IBAction func login(_ sender: UIButton) {
+        login()
+    }
+    func login(){
         guard
             let email = emailTextField.text,
             let password = passwordTextField.text,
@@ -74,7 +77,7 @@ class LoginViewController: UIViewController{
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        login(UIButton(type: .custom))
+        login()
         return true
     }
 }
