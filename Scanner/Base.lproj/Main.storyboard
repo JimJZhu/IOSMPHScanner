@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -323,6 +322,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="messageLabel" destination="8PX-f4-2NU" id="nnt-4s-jRV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lve-4a-iLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -357,7 +359,7 @@
                                                     <action selector="switchExpiryDateOn:" destination="rFV-ki-voj" eventType="valueChanged" id="CKy-vF-a18"/>
                                                 </connections>
                                             </switch>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="oR2-fg-GIF">
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="oR2-fg-GIF">
                                                 <rect key="frame" x="15" y="262" width="344" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>

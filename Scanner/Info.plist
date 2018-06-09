@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To select product photos</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To scan bar codes</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
