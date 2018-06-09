@@ -17,16 +17,16 @@ class HomeViewController: UIViewController {
     //MARK: - Properties
     var databaseRef: DatabaseReference!
     var labels: [UILabel]!
+    var products = [Product]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        labels = createLabelArray(totalStockLabel)
+        labels = createLabelArray(with: totalStockLabel)
         // Gets firebase references
         databaseRef = Database.database().reference().child("products")
         // Load Data
         loadData(from: databaseRef)
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,10 +65,11 @@ class HomeViewController: UIViewController {
             }
         })
     }
-    func createLabelArray(with labels: UILabel...){
+    func createLabelArray(with labels: UILabel...) -> [UILabel]{
         var array: [UILabel] = []
         for label: UILabel in labels{
             array.append(label)
         }
+        return array
     }
 }
