@@ -41,6 +41,7 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
     var product: Product?
     private var databaseRef: DatabaseReference!
     private var storageRef: StorageReference!
+    var dismiss: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,7 +136,11 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         } else if let owningNavigationController = navigationController {
             // Switch to view mode if it toggle mode, otherwise navigate back
             if let title = sender.title, title == "Back" {
-                owningNavigationController.popViewController(animated: true)
+                if dismiss {
+                    dismiss(animated: true, completion: nil)
+                }else{
+                    owningNavigationController.popViewController(animated: true)
+                }
             } else {
                 // Present alert for confirmiation before exiting
                 let alert = UIAlertController(title: "Edit Item", message: "Are you sure you want to exit Edit Item? Changes will not be saved.", preferredStyle: .alert)

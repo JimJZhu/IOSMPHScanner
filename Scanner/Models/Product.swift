@@ -31,6 +31,14 @@ class Product{
     var upcEAN: String?
     var stock: Int?
     let dateFormatter: DateFormatter
+    var expString: String {
+        if let exp = exp{
+            dateFormatter.dateFormat = "dd-MMM-yyyy"
+            return dateFormatter.string(from: exp)
+        }else{
+            return ""
+        }
+    }
     var highestPrice: Double {
         let priceArray = [amazonCAPrice ?? 0, amazonCOMPrice ?? 0,
                           fifibabyPrice ?? 0, imaplehousePrice ?? 0,fbaCOMPrice ?? 0]

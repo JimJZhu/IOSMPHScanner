@@ -124,8 +124,13 @@ class ProductTableViewController: UITableViewController {
             
             let selectedProduct = isFiltering() ? filteredProducts[indexPath.row] : products[indexPath.row]
             productDetailViewController.product = selectedProduct
+            productDetailViewController.dismiss = false
         case "ScanItem":
             os_log("Scanning a new Item.", log: OSLog.default, type: .debug)
+            guard let barcodeScannerController = segue.destination.contents as? BarScannerController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            barcodeScannerController.products = products
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "?")")
         }
@@ -213,8 +218,18 @@ extension ProductTableViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
+extension UIViewController {
+    var contents: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController ?? self
+        } else {
+            return self
+        }
+    }
+}
 extension Double{
     var priceString : String{
         return "$\(String(format: "%.2f", self))"
     }
 }
+

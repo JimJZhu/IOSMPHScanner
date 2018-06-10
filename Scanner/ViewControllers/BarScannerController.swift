@@ -1,5 +1,5 @@
 //
-//  QRScannerController.swift
+//  BarScannerController.swift
 //  Scanner
 //
 //  Created by Jim on 2018-05-20.
@@ -9,15 +9,17 @@
 import UIKit
 import AVFoundation
 
-class QRScannerController: UIViewController{
+class BarScannerController: UIViewController{
     
     //MARK: - Outlets
     @IBOutlet weak var messageLabel: UILabel!
     
-    var captureSession = AVCaptureSession()
+    var products: [Product]?
+    var scannedProduct: Product?
     
+    var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    var qrCodeFrameView: UIView?
+    var barCodeFrameView: UIView?
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
                                       AVMetadataObject.ObjectType.code39Mod43,
@@ -55,7 +57,6 @@ class QRScannerController: UIViewController{
             // Set delegate and use the default dispatch queue to execute the call back
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             captureMetadataOutput.metadataObjectTypes = supportedCodeTypes
-            //            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
             
         } catch {
             // If any error occurs, simply print it out and don't continue any more.
@@ -75,14 +76,14 @@ class QRScannerController: UIViewController{
         // Move the message label and top bar to the front
         view.bringSubview(toFront: messageLabel)
         
-        // Initialize QR Code Frame to highlight the QR code
-        qrCodeFrameView = UIView()
+        // Initialize Bar Code Frame to highlight the Bar code
+        barCodeFrameView = UIView()
         
-        if let qrCodeFrameView = qrCodeFrameView {
-            qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
-            qrCodeFrameView.layer.borderWidth = 2
-            view.addSubview(qrCodeFrameView)
-            view.bringSubview(toFront: qrCodeFrameView)
+        if let barCodeFrameView = barCodeFrameView {
+            barCodeFrameView.layer.borderColor = UIColor.green.cgColor
+            barCodeFrameView.layer.borderWidth = 2
+            view.addSubview(barCodeFrameView)
+            view.bringSubview(toFront: barCodeFrameView)
         }
     }
 
@@ -92,15 +93,20 @@ class QRScannerController: UIViewController{
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        guard let productDetailViewController = segue.destination.contents as? ProductViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+        
+        productDetailViewController.product = scannedProduct
+        productDetailViewController.dismiss = true
     }
-    */
+    
     // MARK: - Actions
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -108,37 +114,44 @@ class QRScannerController: UIViewController{
     
     // MARK: - Helper methods
     func getProduct(decodedURL: String) {
-        
         if presentedViewController != nil {
             return
         }
-        
-        let alertPrompt = UIAlertController(title: "Open App", message: "You're going to open \(decodedURL)", preferredStyle: .actionSheet)
-        let confirmAction = UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            
-            if let url = URL(string: decodedURL) {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+        var found = false
+        for product in products! {
+            if product.upcEAN ==  decodedURL {
+                found = true
+                scannedProduct = product
+                let alertPrompt = UIAlertController(title: "\(product.name)", message: "UPC: \(decodedURL) \nStock: \(product.stock ?? 0) \nPrice: $\(product.highestPrice) \nExpiry Date: \(product.expString)", preferredStyle: .actionSheet)
+                let confirmAction = UIAlertAction(title: "Go", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+                    self.performSegue(withIdentifier: "scannedItem", sender: nil)
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+                alertPrompt.addAction(confirmAction)
+                alertPrompt.addAction(cancelAction)
+                
+                present(alertPrompt, animated: true, completion: nil)
             }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
-        
-        alertPrompt.addAction(confirmAction)
-        alertPrompt.addAction(cancelAction)
-        
-        present(alertPrompt, animated: true, completion: nil)
+        }
+        if !found {
+            let alertPrompt = UIAlertController(title: "No Product Found", message: "No product found with the UPC code: \(decodedURL)", preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
+            
+            alertPrompt.addAction(cancelAction)
+            
+            present(alertPrompt, animated: true, completion: nil)
+        }
     }
 }
 
-extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
+extension BarScannerController: AVCaptureMetadataOutputObjectsDelegate {
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects.count == 0 {
-            qrCodeFrameView?.frame = CGRect.zero
-            messageLabel.text = "No QR code is detected"
+            barCodeFrameView?.frame = CGRect.zero
+            messageLabel.text = "No Bar code is detected"
             return
         }
         
@@ -146,9 +159,9 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
         let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
         if supportedCodeTypes.contains(metadataObj.type) {
-            // If the found metadata is equal to the QR code metadata (or barcode) then update the status label's text and set the bounds
+            // If the found metadata is equal to the Bar code metadata (or barcode) then update the status label's text and set the bounds
             let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
-            qrCodeFrameView?.frame = barCodeObject!.bounds
+            barCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
                 getProduct(decodedURL: metadataObj.stringValue!)
