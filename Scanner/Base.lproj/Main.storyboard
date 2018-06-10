@@ -298,7 +298,7 @@
         <!--Scanner-->
         <scene sceneID="Lig-LV-gft">
             <objects>
-                <viewController id="T51-sL-xoh" customClass="QRScannerController" customModule="Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="T51-sL-xoh" customClass="BarScannerController" customModule="Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vvL-P4-Gjx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -324,6 +324,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="messageLabel" destination="8PX-f4-2NU" id="nnt-4s-jRV"/>
+                        <segue destination="K2f-Us-mFp" kind="presentation" identifier="scannedItem" id="hzU-if-M3t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lve-4a-iLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -675,6 +676,7 @@
         <image name="defaultPhoto" width="320" height="320"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="FSW-3x-GDy"/>
         <segue reference="K2p-ee-oQv"/>
     </inferredMetricsTieBreakers>
 </document>
