@@ -11,6 +11,7 @@ import os.log
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import IoniconsSwift
 
 class ProductTableViewController: UITableViewController {
     
@@ -40,6 +41,7 @@ class ProductTableViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
+        
         // Turns off admin features
         newItemButton.isEnabled = AuthHelper.isAdmin(user: Auth.auth().currentUser)
     }

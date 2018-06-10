@@ -38,6 +38,7 @@ PODS:
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GTMSessionFetcher/Core (1.1.15)
+  - IoniconsSwift (2.1.4)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -54,6 +55,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - IoniconsSwift (from `http://github.com/tidwall/IoniconsSwift.git`, branch `master`)
   - SDWebImage (~> 4.0)
 
 SPEC REPOS:
@@ -72,6 +74,16 @@ SPEC REPOS:
     - nanopb
     - SDWebImage
 
+EXTERNAL SOURCES:
+  IoniconsSwift:
+    :branch: master
+    :git: http://github.com/tidwall/IoniconsSwift.git
+
+CHECKOUT OPTIONS:
+  IoniconsSwift:
+    :commit: 6189f2c363b7694b89a1efea7bf29f967cb8b464
+    :git: http://github.com/tidwall/IoniconsSwift.git
+
 SPEC CHECKSUMS:
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
@@ -83,10 +95,11 @@ SPEC CHECKSUMS:
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  IoniconsSwift: a9034803dfe59ec48a73c95b812c67afdfa3ed08
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
 
-PODFILE CHECKSUM: 16572f030116d3bfc659e13666bc1ac7e9a440ce
+PODFILE CHECKSUM: b16ea62f11c8c8d18b6e061fe010e40101144685
 
 COCOAPODS: 1.5.2
