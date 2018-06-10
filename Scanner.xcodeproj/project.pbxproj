@@ -24,6 +24,7 @@
 		38CBBA6220ADE178007561B7 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBBA6120ADE178007561B7 /* ProductViewController.swift */; };
 		38CFE03C20B143D3003DEB9A /* BarScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CFE03B20B143D3003DEB9A /* BarScannerController.swift */; };
 		38CFE03E20B279B0003DEB9A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE03D20B279B0003DEB9A /* GoogleService-Info.plist */; };
+		EC50C00B20CD906E00916966 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC50C00A20CD906E00916966 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		8C45013115472EDDED26A7E6 /* Pods-Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.release.xcconfig"; sourceTree = "<group>"; };
 		D160F8F8AA27F20553768529 /* Pods-Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Scanner/Pods-Scanner.debug.xcconfig"; sourceTree = "<group>"; };
 		DEDB506CA22D1611775D3034 /* Pods_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC50C00A20CD906E00916966 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				38CFE03B20B143D3003DEB9A /* BarScannerController.swift */,
 				380A5D1720B5D03B00A6A5BF /* LoginViewController.swift */,
 				380A5D1920B5DDF500A6A5BF /* SettingsViewController.swift */,
+				EC50C00A20CD906E00916966 /* TabBarViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IoniconsSwift/IoniconsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -267,6 +271,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IoniconsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -293,6 +298,7 @@
 				38CBBA5620ACBAD8007561B7 /* Product.swift in Sources */,
 				380A5D1C20B5E3E500A6A5BF /* AuthHelper.swift in Sources */,
 				38CBBA5A20ACC438007561B7 /* ProductTableViewController.swift in Sources */,
+				EC50C00B20CD906E00916966 /* TabBarViewController.swift in Sources */,
 				380A5D1A20B5DDF500A6A5BF /* SettingsViewController.swift in Sources */,
 				385E052320BC5CE800E37A29 /* SortMethod.swift in Sources */,
 			);

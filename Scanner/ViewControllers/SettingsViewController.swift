@@ -9,17 +9,18 @@
 import UIKit
 import FirebaseAuth
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UITableViewController {
 
     // MARK: - Outlets
-    @IBOutlet weak var accountTypeLabel: UILabel!
-    @IBOutlet weak var privilegesLabel: UILabel!
+    @IBOutlet weak var accountName: UITableViewCell!
+    @IBOutlet weak var accountPrivileges: UITableViewCell!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        accountTypeLabel.text = "Account: \(String(describing: Auth.auth().currentUser?.email ?? "unknown"))"
-        privilegesLabel.text = "Privileges: \(AuthHelper.isAdmin(user: Auth.auth().currentUser) ? "Admin" : "Standard")"
+        accountName.detailTextLabel?.text = "\(String(describing: Auth.auth().currentUser?.email ?? "unknown"))"
+        accountPrivileges.detailTextLabel?.text = "\(AuthHelper.isAdmin(user: Auth.auth().currentUser) ? "Admin" : "Standard")"
     }
 
     override func didReceiveMemoryWarning() {

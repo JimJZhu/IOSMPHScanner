@@ -12,4 +12,5 @@ target 'Scanner' do
   pod 'Firebase/Storage'
   pod 'SDWebImage', '~> 4.0'
   pod 'Charts'
+  pod 'IoniconsSwift', :git => 'http://github.com/tidwall/IoniconsSwift.git', :branch => 'master'
 end
