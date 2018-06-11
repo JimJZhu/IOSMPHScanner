@@ -252,7 +252,8 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
                 
                 // Add loading modal
                 self.view.addSubview(self.loadingScreen!)
-                
+                self.saveButton.isEnabled = false
+                self.cancelButton.isEnabled = false
                 // Begin upload
                 let uploadTask = self.storageRef.child(filePath).putData(imageData, metadata: metaData){(metaData,error) in
                     if let error = error {
