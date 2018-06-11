@@ -19,13 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To select product photos</string>
 	<key>NSCameraUsageDescription</key>
 	<string>To scan bar codes</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To select product photos</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
