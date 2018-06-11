@@ -135,12 +135,38 @@ class BarScannerController: UIViewController{
             }
         }
         if !found {
-            let alertPrompt = UIAlertController(title: "No Product Found", message: "No product found with the UPC code: \(decodedURL)", preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
-            
-            alertPrompt.addAction(cancelAction)
-            
-            present(alertPrompt, animated: true, completion: nil)
+            // Try only 12 digits
+            var upc = decodedURL
+            upc.remove(at: upc.startIndex)
+
+            for product in products! {
+                if product.upcEAN == upc {
+                    found = true
+                    scannedProduct = product
+                    let alertPrompt = UIAlertController(title: "\(product.name)", message: "UPC: \(decodedURL) \nStock: \(product.stock ?? 0) \nPrice: $\(product.highestPrice) \nExpiry Date: \(product.expString)", preferredStyle: .actionSheet)
+                    let confirmAction = UIAlertAction(title: "Go", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+                        self.performSegue(withIdentifier: "scannedItem", sender: nil)
+                    })
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+                    alertPrompt.addAction(confirmAction)
+                    alertPrompt.addAction(cancelAction)
+                    
+                    present(alertPrompt, animated: true, completion: nil)
+                }
+            }
+            if !found {
+                var message = "No product found with the UPC code: \(decodedURL)";
+                if decodedURL.count == 13 {
+                    message = "No product found with the EAN code: \(decodedURL) or UPC code : \(upc)"
+                }
+                let alertPrompt = UIAlertController(title: "No Product Found", message: message, preferredStyle: .actionSheet)
+                let cancelAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil)
+                
+                alertPrompt.addAction(cancelAction)
+                
+                present(alertPrompt, animated: true, completion: nil)
+            }
         }
     }
 }
