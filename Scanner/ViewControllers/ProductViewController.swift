@@ -50,6 +50,8 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
         productNameTextField.delegate = self
         productUPCTextField.delegate = self
         
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
         if let selectedProduct = product {
             setProductFields(to:selectedProduct)
             // Edit mode off by default
