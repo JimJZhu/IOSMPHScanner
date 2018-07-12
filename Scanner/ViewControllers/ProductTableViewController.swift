@@ -183,7 +183,7 @@ class ProductTableViewController: UITableViewController {
             cell.expiryDateLabel.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             cell.expiryDateLabel.text = "Expires:"
         }
-        cell.productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .progressiveDownload])
+        cell.productImageView.sd_setImage(with: product.imageURL, placeholderImage: #imageLiteral(resourceName: "defaultPhoto"), options: [.continueInBackground, .scaleDownLargeImages, .progressiveDownload])
         cell.upcCodeLabel.text = "UPC: \(product.upcEAN ?? "-")"
         cell.asinLabel.text = "ASIN: \(product.asin ?? "-")"
         cell.skuLabel.text = "SKU: \(product.caSKU ?? "-")"
