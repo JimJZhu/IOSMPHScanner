@@ -245,14 +245,15 @@ class ProductViewController: UIViewController, UITextFieldDelegate,UIImagePicker
                 
                 // Make Thumbnail
                 let image = self.productImageView.image?.cgImage
-                let width = image?.width / 2
-                let height = image?.height / 2
+                let width = (image?.width)! / 2
+                let height = (image?.height)! / 2
                 let bitsPerComponent = image?.bitsPerComponent
                 let bytesPerRow = image?.bytesPerRow
                 let colorSpace = image?.colorSpace
                 let bitmapInfo = image?.bitmapInfo
-                let context = CGContext.init(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo)
+                let context = CGContext.init(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent!, bytesPerRow: bytesPerRow!, space: colorSpace!, bitmapInfo: bitmapInfo!.rawValue)
                                 // Do Image Upload and update image url in DB
+                // Do Image Upload and update image url in DB
                 let imageData = UIImageJPEGRepresentation(self.productImageView.image!, 0.8)!
                 
                 // set upload path
